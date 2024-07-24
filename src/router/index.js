@@ -1,8 +1,11 @@
 // Router Import Config
 import { createRouter, createWebHistory } from 'vue-router'
+import { authValidation } from '@/middlewares/auth'
 
 import HomePage from '@/pages/HomePage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
+import AdminHomePage from '@/pages/AdminHomePage.vue'
+import WorkerHomePage from '@/pages/WorkerHomePage.vue'
 
 const routes = [
   {
@@ -12,7 +15,33 @@ const routes = [
   {
     path: '/login',
     component: LoginPage,
-  } 
+  },
+  {
+    path: '/adminHome',
+    component: AdminHomePage,
+    beforeEnter: async (to, from) => {
+      // reject the navigation
+      const validateAuth = await authValidation()
+      if (!validateAuth) {
+        router.push('/login')
+        return validateAuth
+      }
+      return validateAuth
+    },
+  },
+  {
+    path: '/workerHome',
+    component: WorkerHomePage,
+    beforeEnter: async (to, from) => {
+      // reject the navigation
+      const validateAuth = await authValidation()
+      if (!validateAuth) {
+        router.push('/login')
+        return validateAuth
+      }
+      return validateAuth
+    },
+  }
 ]
 
 const router = createRouter({

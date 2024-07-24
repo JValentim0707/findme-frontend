@@ -1,8 +1,9 @@
 import axios from 'axios'
 
-const devURL = 'http://localhost:3000'
+// const devURL = 'http://localhost:3030'
+const prodURL = 'https://findme-backend-ten.vercel.app'
 
-axios.defaults.baseURL = devURL
+axios.defaults.baseURL = prodURL
 
 const request = axios
 
