@@ -1,41 +1,11 @@
 <template>
-  <div class="container-register">
+  <div class="container-register mt-2">
     <h2>Register Page</h2>
-    <div class="box-register">
-      <v-form class="container-form">
-        <v-container>
-          <v-row>
-            <v-col>
-              <CustomTextField v-model="name" label="Nome" type="text"></CustomTextField>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <CustomTextField v-model="document" label="CPF" type="text"></CustomTextField>
-            </v-col>
-            <v-col>
-              <CustomTextField v-model="email" label="Email" type="email"></CustomTextField>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <CustomTextField v-model="password" label="Senha" type="password"></CustomTextField>
-            </v-col>
-            <v-col>
-              <CustomTextField v-model="repeatPassword" label="Repita Senha" type="password"></CustomTextField>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <CustomTextField v-model="phone" label="Celular" type="text"></CustomTextField>
-            </v-col>
-            <v-col>
-              <CustomTextField v-model="bornDate" label="Data de Nascimento" type="date"></CustomTextField>
-            </v-col>
-          </v-row>
-          <CustomButton label="Cadastrar"></CustomButton>
-        </v-container>
-      </v-form>
+    <div v-if="step === 0">
+      <RegisterUserSelectComponent @onSelectUser="onSelectUSerType"></RegisterUserSelectComponent>
+    </div>
+    <div class="container-step1" v-if="step === 1">
+      <RegisterUserFormComponent @onRegisterUser="onRegisterUser"></RegisterUserFormComponent>
     </div>
   </div>
 </template>
@@ -46,27 +16,36 @@
 import CustomTextField from '../components/forms/CustomTextField.vue'
 import CustomButton from '../components/forms/CustomButton.vue'
 
+// Components Page
+import RegisterUserSelectComponent from '../components/RegisterPageComponents/RegisterUserSelectComponent.vue'
+import RegisterUserFormComponent from '../components/RegisterPageComponents/RegisterUserFormComponent.vue'
+ 
 // Functions
+import { createUser } from '../services/user.js'
 
 export default {
   components: {
     CustomTextField,
-    CustomButton
+    CustomButton,
+    RegisterUserSelectComponent,
+    RegisterUserFormComponent
   },
 
   data() {
     return {
-      name: "",
-      document: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-      phone: "",
-      bornDate: "",
+      step: 0,
+      selectedUserType: null,
     }
   },
 
   methods: {
+    onSelectUSerType(userType){
+      this.selectedUserType = userType
+      this.step = 1
+    },
+    async onRegisterUser(userData) {
+      await createUser({...userData, role: this.selectedUserType})
+    }
   }
 }
 </script>
@@ -78,18 +57,12 @@ export default {
   height: 100%;
   justify-content: center;
   flex-direction: column;
-
-  .box-register {
-    display: flex;
-    width: 60%;
-    height: 800px;
-    background-color: rgba(255, 255, 255, 0.438);
-    border-radius: 10px;
-  }
 }
 
-.container-form {
+.container-step1 {
   display: flex;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 </style>

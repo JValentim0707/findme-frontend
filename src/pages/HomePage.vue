@@ -1,7 +1,7 @@
 <template>
   <div class="container-home">
     <h2>Home Page</h2>
-    <div class="button-group">
+    <div class="button-group mt-2">
       <CustomButton class="mr-2" label="Login Page" @onClick="goToLoginPage"></CustomButton>
       <CustomButton label="Register Page" @onClick="goToRegisterPage"></CustomButton>
     </div>
