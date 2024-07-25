@@ -2,10 +2,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { authValidation } from '@/middlewares/auth'
 
+
+// Import Components
 import HomePage from '@/pages/HomePage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import AdminHomePage from '@/pages/AdminHomePage.vue'
 import WorkerHomePage from '@/pages/WorkerHomePage.vue'
+import RegisterPage from '@/pages/RegisterPage.vue'
 
 const routes = [
   {
@@ -15,6 +18,10 @@ const routes = [
   {
     path: '/login',
     component: LoginPage,
+  },
+  {
+    path: '/register',
+    component: RegisterPage,
   },
   {
     path: '/adminHome',

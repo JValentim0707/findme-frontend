@@ -1,7 +1,10 @@
 <template>
   <div class="container-home">
     <h2>Home Page</h2>
-    <CustomButton label="Login Page" @onClick="goToLoginPage"></CustomButton>
+    <div class="button-group">
+      <CustomButton class="mr-2" label="Login Page" @onClick="goToLoginPage"></CustomButton>
+      <CustomButton label="Register Page" @onClick="goToRegisterPage"></CustomButton>
+    </div>
   </div>
 </template>
 
@@ -17,6 +20,9 @@ export default {
   methods: {
     goToLoginPage() {
       this.$router.push('/login')
+    },
+    goToRegisterPage(){
+      this.$router.push('/register')
     }
   }
 }
@@ -30,6 +36,10 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
+}
+
+.button-group {
+  display: flex;
 }
 
 </style>
