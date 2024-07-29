@@ -7,6 +7,9 @@
     <div class="container-step1" v-if="step === 1">
       <RegisterUserFormComponent @onRegisterUser="onRegisterUser"></RegisterUserFormComponent>
     </div>
+    <div class="container-step1" v-if="step === 2">
+      <RegisterEmailValidateComponent @onValidateEmail="onValidateEmail"> </RegisterEmailValidateComponent>
+    </div>
   </div>
 </template>
 
@@ -19,22 +22,26 @@ import CustomButton from '../components/forms/CustomButton.vue'
 // Components Page
 import RegisterUserSelectComponent from '../components/RegisterPageComponents/RegisterUserSelectComponent.vue'
 import RegisterUserFormComponent from '../components/RegisterPageComponents/RegisterUserFormComponent.vue'
+import RegisterEmailValidateComponent from '../components/RegisterPageComponents/RegisterEmailValidateComponent.vue'
  
 // Functions
 import { createUser } from '../services/user.js'
+import { validateEmail } from '../services/auth.js'
 
 export default {
   components: {
     CustomTextField,
     CustomButton,
     RegisterUserSelectComponent,
-    RegisterUserFormComponent
+    RegisterUserFormComponent,
+    RegisterEmailValidateComponent
   },
 
   data() {
     return {
       step: 0,
       selectedUserType: null,
+      userCreated: null,
     }
   },
 
@@ -44,7 +51,12 @@ export default {
       this.step = 1
     },
     async onRegisterUser(userData) {
-      await createUser({...userData, role: this.selectedUserType})
+      this.userCreated = await createUser({...userData, role: this.selectedUserType})
+      this.step = 2
+    },
+    async onValidateEmail(code) {
+      const res = await validateEmail({ userId: this.userCreated.id, email: this.userCreated.email, code: code })
+      this.$router.push('/login')
     }
   }
 }

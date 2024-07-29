@@ -5,6 +5,13 @@ const login = async (loginData) => {
   return res.data
 }
 
+const validateEmail = async (userData) => {
+  const res = await request.post('/email/validation', userData)
+  return res.data
+
+}
+
 export { 
-  login
+  login,
+  validateEmail
 }
