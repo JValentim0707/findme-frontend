@@ -5,6 +5,43 @@ const createUser = async (userData) => {
   return res
 }
 
+const updateDetails = async (userDetailsData) => {
+  try {
+    const res = await request.put('/user/details', userDetailsData)
+    return res
+  } catch (error) {
+    console.log('erro', error)
+    
+  }
+}
+
+const uploadDocuments = async (documentFiles) => {
+  try {
+    const res = await request.post('/upload/documents', documentFiles)
+    return res
+    
+  } catch (error) {
+    console.log('erro', error)
+  }
+
+}
+
+const acceptedUser = async () => {
+  const resp = await request.get('/user/accepted')
+  
+  return resp
+}
+
+const getAllApproves = async () => {
+  const { data } = await request.get('/user/approval')
+
+  return data
+}
+
 export {
-  createUser
+  createUser,
+  updateDetails,
+  uploadDocuments,
+  getAllApproves,
+  acceptedUser
 }

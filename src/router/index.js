@@ -9,6 +9,7 @@ import LoginPage from '@/pages/LoginPage.vue'
 import AdminHomePage from '@/pages/AdminHomePage.vue'
 import WorkerHomePage from '@/pages/WorkerHomePage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import ReviewPage from '@/pages/ReviewPage.vue'
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/register',
     component: RegisterPage,
+  },
+  {
+    path: '/review',
+    component: ReviewPage,
   },
   {
     path: '/adminHome',

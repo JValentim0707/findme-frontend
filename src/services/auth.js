@@ -6,7 +6,7 @@ const login = async (loginData) => {
 }
 
 const validateEmail = async (userData) => {
-  const res = await request.post('/email/validation', userData)
+  const res = await request.post('/auth/email/validation', userData)
   return res.data
 
 }

@@ -49,13 +49,13 @@ export default {
 
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      document: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-      phone: "",
+      firstName: "Test",
+      lastName: "Test",
+      document: "1234",
+      email: "email@test.com",
+      password: "12345",
+      repeatPassword: "1234",
+      phone: "3232132",
       bornDate: "",
     }
   },

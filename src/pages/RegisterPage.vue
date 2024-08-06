@@ -10,6 +10,12 @@
     <div class="container-step1" v-if="step === 2">
       <RegisterEmailValidateComponent @onValidateEmail="onValidateEmail"> </RegisterEmailValidateComponent>
     </div>
+    <div class="container-step1" v-if="step === 3">
+      <RegisterUserDetailsComponent @onRegisterDetails="onRegisterDetails"> </RegisterUserDetailsComponent>
+    </div>
+    <div class="container-step1" v-if="step === 4">
+      <RegisterDocumentsComponent @onRegisterDocuments="onRegisterDocuments" :userDataId="userCreated.userId"></RegisterDocumentsComponent>
+    </div>
   </div>
 </template>
 
@@ -23,9 +29,11 @@ import CustomButton from '../components/forms/CustomButton.vue'
 import RegisterUserSelectComponent from '../components/RegisterPageComponents/RegisterUserSelectComponent.vue'
 import RegisterUserFormComponent from '../components/RegisterPageComponents/RegisterUserFormComponent.vue'
 import RegisterEmailValidateComponent from '../components/RegisterPageComponents/RegisterEmailValidateComponent.vue'
+import RegisterUserDetailsComponent from '../components/RegisterPageComponents/RegisterUserDetails.vue'
+import RegisterDocumentsComponent from '../components/RegisterPageComponents/RegisterDocuments.vue'
  
 // Functions
-import { createUser } from '../services/user.js'
+import { createUser, updateDetails, uploadDocuments } from '../services/user.js'
 import { validateEmail } from '../services/auth.js'
 
 export default {
@@ -34,7 +42,9 @@ export default {
     CustomButton,
     RegisterUserSelectComponent,
     RegisterUserFormComponent,
-    RegisterEmailValidateComponent
+    RegisterEmailValidateComponent,
+    RegisterUserDetailsComponent,
+    RegisterDocumentsComponent
   },
 
   data() {
@@ -51,12 +61,22 @@ export default {
       this.step = 1
     },
     async onRegisterUser(userData) {
-      this.userCreated = await createUser({...userData, role: this.selectedUserType})
+      const { data } = await createUser({...userData, role: this.selectedUserType})
+      this.userCreated = data
       this.step = 2
     },
     async onValidateEmail(code) {
-      const res = await validateEmail({ userId: this.userCreated.id, email: this.userCreated.email, code: code })
-      this.$router.push('/login')
+      const res = await validateEmail({ userId: this.userCreated.userId, email: this.userCreated.email, code: code })
+      if (this.selectedUserType === 'user') return this.$router.push('/login')
+      this.step = 3
+    },
+    async onRegisterDetails(userDetailsData) {
+      const res = await updateDetails({ userId: this.userCreated.userId , ...userDetailsData})
+      this.step = 4
+    },
+    async onRegisterDocuments(filesData) {
+      const res = await uploadDocuments(filesData)
+      // this.$router.push('/login')
     }
   }
 }

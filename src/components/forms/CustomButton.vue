@@ -9,8 +9,9 @@ export default {
   },
 
   methods: {
-    onClick() {
-      this.$emit('onClick')
+    onClick(params1) {
+      // console.log('params', params, data)
+      this.$emit('onClick', params1)
     }
   }
 }
