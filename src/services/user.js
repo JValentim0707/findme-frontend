@@ -26,8 +26,8 @@ const uploadDocuments = async (documentFiles) => {
 
 }
 
-const acceptedUser = async () => {
-  const resp = await request.get('/user/accepted')
+const acceptedUser = async (formData) => {
+  const resp = await request.put('/user/accepted', formData )
   
   return resp
 }

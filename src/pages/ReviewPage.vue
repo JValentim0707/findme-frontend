@@ -4,7 +4,7 @@
     <div>
       <div v-for="user in userToApproval" class="container-users"> 
         <div class="mr-2 mb-4">{{ user.id }}</div>
-        <CustomButton label="Approvar" :onClick="submitAcceptUser('test')"></CustomButton>
+        <v-btn @click="submitAcceptUser({ userId: user.id, status: 'approved' })"> Approvado </v-btn>
       </div>
     </div>
   </div>
@@ -35,8 +35,7 @@ export default {
       this.$router.push('/review')
     },
     async submitAcceptUser(approveData) {
-      console.log('a', approveData)
-      // const res = await acceptedUser(approveData, approveId)
+      const res = await acceptedUser({ userApprovesId: approveData.userId, status: approveData.status },)
     }
   }
 }

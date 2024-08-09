@@ -1,8 +1,12 @@
 import request from "./config"
 
-const login = async (loginData) => {
-  const res = await request.post('/auth/login', loginData)
-  return res.data
+const loginOnSystem = async (loginData) => {
+  try {
+    const res = await request.post('/auth/login', loginData)
+    return res.data
+  } catch (error) {
+    throw new Error('Error: ', error)
+  }
 }
 
 const validateEmail = async (userData) => {
@@ -12,6 +16,6 @@ const validateEmail = async (userData) => {
 }
 
 export { 
-  login,
+  loginOnSystem,
   validateEmail
 }

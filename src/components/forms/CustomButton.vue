@@ -6,12 +6,13 @@
 export default {
   props: {
     label: String,
+    functionParams: Object
   },
 
   methods: {
-    onClick(params1) {
-      // console.log('params', params, data)
-      this.$emit('onClick', params1)
+    onClick() {
+      // console.log(this.functionParams)
+      this.$emit('onClick', 'bacon')
     }
   }
 }
