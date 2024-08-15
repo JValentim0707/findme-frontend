@@ -34,13 +34,14 @@
 import CustomTextField from '../components/forms/CustomTextField.vue'
 import CustomButton from '../components/forms/CustomButton.vue'
 
-// // Functions
+// Functions
 import { loginOnSystem } from '../services/auth.js'
 import { useRouter } from 'vue-router'
-
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 
 const router = useRouter()
+const store = useStore()
 
 const textFieldProperties = ref({
   label: 'Test',
@@ -65,7 +66,7 @@ const loginSubmit = async () => {
     const { user, accessToken } = await loginOnSystem({ email: email.value, password: password.value })
   
     window.localStorage.setItem('jwtToken', accessToken);
-  
+    await store.dispatch('user/setUserValue', {userInfo: { ...user }})
     router.push(userLoginPage.value[user.role].path)
   } catch (err) {
     error.value = true

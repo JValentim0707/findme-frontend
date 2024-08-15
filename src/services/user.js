@@ -1,5 +1,14 @@
 import request from "./config";
 
+const getAllUsers = async () => {
+  try {
+    const res = await request.get('/user/all')
+    return res
+  } catch (error) {
+    console.log('erro', error)
+  }
+}
+
 const createUser = async (userData) => {
   const res = await request.post('/user/create', userData)
   return res
@@ -39,6 +48,7 @@ const getAllApproves = async () => {
 }
 
 export {
+  getAllUsers,
   createUser,
   updateDetails,
   uploadDocuments,

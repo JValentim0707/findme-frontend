@@ -1,42 +1,71 @@
 <template>
   <div class="container-admin">
-    <h2>Admin Home Page</h2>
+    <CardStatistic 
+      v-for="cardData in cardStatisticData" 
+      :title="cardData.title" 
+      :icon="cardData.icon" 
+      :iconColor="cardData.iconColor"
+      :iconSize="cardData.iconSize"
+      :value="cardData.value"
+    ></CardStatistic>
+    <!-- <h2>Admin Home Page</h2>
     <div>
       <CustomButton label="Users Validation" @onClick="goToUserValidaitonPage"></CustomButton>
-    </div>
+    </div> -->
   </div>
 </template>
 
-<script>
-import CustomButton from '@/components/forms/CustomButton.vue';
+<script setup>
+import { ref, onMounted } from 'vue'
 
-export default {
-  components: {
-    CustomButton
-  },
+import { getAllUsers } from '@/services/user';
 
-  data() {
-    return {
-    }
-  },
+import CardStatistic from '@/components/AdminPageComponents/CardStatistic.vue';
+// import CustomButton from '@/components/forms/CustomButton.vue';
 
-  methods: {
-    goToUserValidaitonPage() {
-      this.$router.push('/review')
-    }
-  }
-}
+const cardStatisticData = ref([])
+
+onMounted(async () => {
+  const allUsers = await getAllUsers()
+  cardStatisticData.value.push({
+    title: 'Número de Usuários',
+    icon: 'mdi-account-group',
+    iconColor: '#008F8C',
+    iconSize: '25',
+    value: allUsers.data.filter((x) => x.role === 'user').length
+  })
+  cardStatisticData.value.push({
+    title: 'Número de Trabalhadores',
+    icon: 'mdi-tools',
+    iconColor: '#008F8C',
+    iconSize: '25',
+    value: allUsers.data.filter((x) => x.role === 'worker').length
+  })
+})
+
+// export default {
+//   components: {
+//     CustomButton
+//   },
+
+//   data() {
+//     return {
+//     }
+//   },
+
+//   methods: {
+//     goToUserValidaitonPage() {
+//       this.$router.push('/review')
+//     }
+//   }
+// }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container-admin {
   display: flex;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
-  flex-direction: column;
-}
-.container-button {
-  display: flex;
+  // height: 100%;
+  // width: 100%;
+  // background-color: white;
 }
 </style>
