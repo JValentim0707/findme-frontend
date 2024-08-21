@@ -86,30 +86,6 @@ const loginSubmit = async () => {
   align-items: center;
   justify-content: center;
 // background-color: darkblue
-  .square-left {
-    position: absolute;
-    border-top: 200px solid transparent;
-    border-bottom: 200px solid transparent;
-    border-left: 200px solid rgba(245, 245, 245, 0.651);
-    left: 0px;
-    top: 0px;
-  }
-  .square-down {
-    position: absolute;
-    border-left: 200px solid transparent;
-    border-right: 200px solid transparent; 
-    border-bottom: 200px solid rgba(245, 245, 245, 0.651);
-    bottom: 0px;
-    left: 300px;
-  }
-  .square-right {
-    position: absolute;
-    border-top: 200px solid transparent;
-    border-bottom: 200px solid transparent;
-    border-right: 200px solid rgba(245, 245, 245, 0.651);
-    top: 100px;
-    right: 0px;
-  }
 }
 .box-login {
   background-color: white;

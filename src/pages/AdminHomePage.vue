@@ -43,29 +43,10 @@ onMounted(async () => {
   })
 })
 
-// export default {
-//   components: {
-//     CustomButton
-//   },
-
-//   data() {
-//     return {
-//     }
-//   },
-
-//   methods: {
-//     goToUserValidaitonPage() {
-//       this.$router.push('/review')
-//     }
-//   }
-// }
 </script>
 
 <style lang="scss" scoped>
 .container-admin {
   display: flex;
-  // height: 100%;
-  // width: 100%;
-  // background-color: white;
 }
 </style>
