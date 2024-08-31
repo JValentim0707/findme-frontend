@@ -7,8 +7,9 @@
       <v-icon icon="mdi-chevron-left" size="25"></v-icon>
     </div>
       <RegisterUserSelectComponent v-if="step === 0" @onSelectUSerType="onSelectUSerType"></RegisterUserSelectComponent>
+      <RegisterUserFormComponent  v-if="step === 1" @onRegisterUser="onRegisterUser"></RegisterUserFormComponent>
+
     <div class="container-step1" v-if="step === 1">
-      <RegisterUserFormComponent @onRegisterUser="onRegisterUser"></RegisterUserFormComponent>
     </div>
     <div class="container-step1" v-if="step === 2">
       <RegisterEmailValidateComponent @onValidateEmail="onValidateEmail"> </RegisterEmailValidateComponent>

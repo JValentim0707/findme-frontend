@@ -28,7 +28,7 @@
 
 <script setup>
 // Functions
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 
 // Components
 import CustomButton from '../forms/CustomButton.vue';
@@ -37,11 +37,6 @@ const emit = defineEmits(['onSelectUSerType'])
 
 const userType = ref('')
 const error = ref(false)
-
-// export default {
-//   components: {
-//     CustomButton
-//   },
 
 const onSelectUser = ((type) => {
   userType.value = type

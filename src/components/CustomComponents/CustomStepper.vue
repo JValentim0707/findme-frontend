@@ -1,5 +1,5 @@
 <template>
-  <v-stepper v-bind="stepperPRops">
+  <v-stepper v-bind="stepperProps">
     <v-stepper-header>
       <v-stepper-item
         v-for="step in stepperValue"
@@ -14,6 +14,6 @@
 <script setup>
   defineProps({
     stepperValue: Array,
-    stepperPRops: Object,
+    stepperProps: Object,
   })
 </script>
