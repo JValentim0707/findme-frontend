@@ -77,6 +77,7 @@ const onNextStep = (() => {
     .underline-title {
       width: 130px;
       height: 3px;
+      margin-top: 3px;
       background-image: linear-gradient(90deg, #7810C2, #0CABA8,);
     }
     .box-select-type-content {

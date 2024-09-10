@@ -9,8 +9,6 @@
       <RegisterUserSelectComponent v-if="step === 0" @onSelectUSerType="onSelectUSerType"></RegisterUserSelectComponent>
       <RegisterUserFormComponent  v-if="step === 1" @onRegisterUser="onRegisterUser"></RegisterUserFormComponent>
 
-    <div class="container-step1" v-if="step === 1">
-    </div>
     <div class="container-step1" v-if="step === 2">
       <RegisterEmailValidateComponent @onValidateEmail="onValidateEmail"> </RegisterEmailValidateComponent>
     </div>
@@ -44,7 +42,7 @@ import RegisterDocumentsComponent from '../components/RegisterPageComponents/Reg
 // import { validateEmail } from '../services/auth.js'
 const router = useRouter()
 
-const step = ref(0)
+const step = ref(1)
 const selectedUserType = ref('')
 
 const onBackLogin = (() => {
