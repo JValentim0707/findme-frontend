@@ -6,8 +6,11 @@
     <div class="container-back" @click="onBackLogin">
       <v-icon icon="mdi-chevron-left" size="25"></v-icon>
     </div>
+    <div class="container-content-register">
+      <CustomStepper v-if="step >= 1" class="custom-stepper" :stepperValue="stepperValue"></CustomStepper>
       <RegisterUserSelectComponent v-if="step === 0" @onSelectUSerType="onSelectUSerType"></RegisterUserSelectComponent>
-      <RegisterUserFormComponent  v-if="step === 1" @onRegisterUser="onRegisterUser"></RegisterUserFormComponent>
+      <RegisterUserFormComponent  v-if="step === 1" @onRegisterUser="onRegisterUser" :error="errorForm"></RegisterUserFormComponent>
+    </div>
 
     <div class="container-step1" v-if="step === 2">
       <RegisterEmailValidateComponent @onValidateEmail="onValidateEmail"> </RegisterEmailValidateComponent>
@@ -27,6 +30,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 // Components
+import CustomStepper from '../components/CustomComponents/CustomStepper.vue'
 // import CustomTextField from '../components/forms/CustomTextField.vue'
 // import CustomButton from '../components/forms/CustomButton.vue'
 
@@ -38,12 +42,26 @@ import RegisterUserDetailsComponent from '../components/RegisterPageComponents/R
 import RegisterDocumentsComponent from '../components/RegisterPageComponents/RegisterDocuments.vue'
  
 // // Functions
-// import { createUser, updateDetails, uploadDocuments } from '../services/user.js'
+import { createUser, updateDetails, uploadDocuments } from '../services/user.js'
 // import { validateEmail } from '../services/auth.js'
 const router = useRouter()
 
-const step = ref(1)
+const step = ref(0)
 const selectedUserType = ref('')
+const errorForm = ref(false)
+const userCreated = ref({})
+const stepperValue = ref([
+  {
+    title: "Selecione Tipe de Usuario",
+    value: 1,
+    complete: true
+  },
+  {
+    title: "Informações Basicas",
+    value: 2,
+    complete: false
+  }
+])
 
 const onBackLogin = (() => {
   router.push('/login')
@@ -51,8 +69,28 @@ const onBackLogin = (() => {
 
 const onSelectUSerType = ((userType) => {
   selectedUserType.value = userType
+  if (userType === 'user') stepperValue.value.push({
+    title: "Validação do Email",
+    value: 3,
+    complete: false
+  })
   step.value = 1
 })
+
+const onRegisterUser = ( async (userData) => {
+  try {
+    const { data } = await createUser({...userData, role:  selectedUserType.value})
+    userCreated.value = data
+    step.value = 2
+  } catch (error) {
+    errorForm.value = true
+  }
+})
+  //   async onRegisterUser(userData) {
+  //     const { data } = await createUser({...userData, role: this.selectedUserType})
+  //     this.userCreated = data
+  //     this.step = 2
+  //   },
 
 // export default {
 //   components: {
@@ -107,6 +145,39 @@ const onSelectUSerType = ((userType) => {
   background-image: linear-gradient(220deg, #7810C2, #0CABA8,);
   justify-content: center;
   flex-direction: column;
+
+  .container-content-register {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-stepper ::v-deep() {
+      background-color: white;
+      color: #C8C8C8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 70px;
+      .v-stepper-header {
+        width: 100%;
+        padding: 20px;
+      }
+      .v-stepper-item {
+        display: flex;
+        align-items: center;
+        height: 70px;
+        padding: 0px;
+        width: auto;
+      }
+      .v-avatar {
+        background-color: #008F8C;
+        color: white;
+      }
+    }
 
   .square-left-posstion {
     left: 0px;

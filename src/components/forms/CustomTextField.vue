@@ -4,8 +4,9 @@
     :error="error"
     :label="label" 
     :placeholder="placeholder" 
-    :prepend-inner-icon="prependInnerIcon" 
+    :prepend-inner-icon="prependInnerIcon"
     :type="type"
+    :rules="rules"
   ></v-text-field>
 </template>
 
@@ -16,6 +17,7 @@ defineProps({
     label: String,
     placeholder: String,
     prependInnerIcon: String,
-    type: String
+    type: String,
+    rules: Object
 })
 </script>

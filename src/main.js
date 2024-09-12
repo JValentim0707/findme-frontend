@@ -6,6 +6,7 @@
 
 // Plugins
 import { registerPlugins } from '@/plugins'
+import VueTheMask from 'vue-the-mask'
 
 // Components
 import App from './App.vue'
@@ -21,4 +22,5 @@ const app = createApp(App)
 registerPlugins(app)
 
 app.use(indexStore);
+app.use(VueTheMask)
 app.mount('#app')
