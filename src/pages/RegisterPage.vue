@@ -10,16 +10,9 @@
       <CustomStepper v-if="step >= 1" class="custom-stepper" :stepperValue="stepperValue"></CustomStepper>
       <RegisterUserSelectComponent v-if="step === 0" @onSelectUSerType="onSelectUSerType"></RegisterUserSelectComponent>
       <RegisterUserFormComponent  v-if="step === 1" @onRegisterUser="onRegisterUser" :error="errorForm"></RegisterUserFormComponent>
-    </div>
-
-    <div class="container-step1" v-if="step === 2">
-      <RegisterEmailValidateComponent @onValidateEmail="onValidateEmail"> </RegisterEmailValidateComponent>
-    </div>
-    <div class="container-step1" v-if="step === 3">
-      <RegisterUserDetailsComponent @onRegisterDetails="onRegisterDetails"> </RegisterUserDetailsComponent>
-    </div>
-    <div class="container-step1" v-if="step === 4">
-      <RegisterDocumentsComponent @onRegisterDocuments="onRegisterDocuments" :userDataId="userCreated.userId"></RegisterDocumentsComponent>
+      <RegisterEmailValidateComponent v-if="step === 2" @onValidateEmail="onValidateEmail" :userEmail="userCreated.email"> </RegisterEmailValidateComponent>
+      <RegisterUserDetailsComponent v-if="step === 3" @onRegisterDetails="onRegisterDetails" :error="errorForm"> </RegisterUserDetailsComponent>
+      <RegisterDocumentsComponent v-if="step === 4" @onRegisterDocuments="onRegisterDocuments" :userDataId="userCreated.userId"></RegisterDocumentsComponent>
     </div>
   </div>
 </template>
@@ -43,7 +36,8 @@ import RegisterDocumentsComponent from '../components/RegisterPageComponents/Reg
  
 // // Functions
 import { createUser, updateDetails, uploadDocuments } from '../services/user.js'
-// import { validateEmail } from '../services/auth.js'
+import { validateEmail } from '../services/auth.js'
+
 const router = useRouter()
 
 const step = ref(0)
@@ -69,11 +63,24 @@ const onBackLogin = (() => {
 
 const onSelectUSerType = ((userType) => {
   selectedUserType.value = userType
-  if (userType === 'user') stepperValue.value.push({
-    title: "Validação do Email",
-    value: 3,
-    complete: false
-  })
+  if (userType === 'user') { 
+    stepperValue.value.push({
+      title: "Validação do Email",
+      value: 3,
+      complete: false
+    })
+  } else {
+    stepperValue.value.push({
+      title: "Informações Avançadas",
+      value: 4,
+      complete: false
+    })
+    stepperValue.value.push({
+      title: "Envio de Documetos",
+      value: 5,
+      complete: false
+    })
+  }
   step.value = 1
 })
 
@@ -81,60 +88,37 @@ const onRegisterUser = ( async (userData) => {
   try {
     const { data } = await createUser({...userData, role:  selectedUserType.value})
     userCreated.value = data
+    stepperValue.value[1].complete = true
+    errorForm.value = false
     step.value = 2
   } catch (error) {
     errorForm.value = true
   }
 })
-  //   async onRegisterUser(userData) {
-  //     const { data } = await createUser({...userData, role: this.selectedUserType})
-  //     this.userCreated = data
-  //     this.step = 2
-  //   },
 
-// export default {
-//   components: {
-//     CustomTextField,
-//     CustomButton,
-//     RegisterUserSelectComponent,
-//     RegisterUserFormComponent,
-//     RegisterEmailValidateComponent,
-//     RegisterUserDetailsComponent,
-//     RegisterDocumentsComponent
-//   },
+const onValidateEmail = async (code) => {
+  const res = await validateEmail({ userId: userCreated.value.userId, email: userCreated.value.email, code: code })
+  if (selectedUserType.value === 'user') return router.push('/login')
+  step.value = 3
+}
 
-//   data() {
-//     return {
-//       step: 0,
-//       selectedUserType: null,
-//       userCreated: null,
-//     }
-//   },
+const onRegisterDetails = async (userDetailsData) => {
+  try {
+    const res = await updateDetails({ userId: userCreated.value.userId , ...userDetailsData})
+    stepperValue.value[2].complete = true
+    step.value = 4
+    
+  } catch (error) {
+    errorForm.value = true
+  }
+}
 
-  // methods: {
-  //   onSelectUSerType(userType){
-  //     this.selectedUserType = userType
-  //     this.step = 1
-  //   },
-  //   async onRegisterUser(userData) {
-  //     const { data } = await createUser({...userData, role: this.selectedUserType})
-  //     this.userCreated = data
-  //     this.step = 2
-  //   },
-  //   async onValidateEmail(code) {
-  //     const res = await validateEmail({ userId: this.userCreated.userId, email: this.userCreated.email, code: code })
-  //     if (this.selectedUserType === 'user') return this.$router.push('/login')
-  //     this.step = 3
-  //   },
-  //   async onRegisterDetails(userDetailsData) {
-  //     const res = await updateDetails({ userId: this.userCreated.userId , ...userDetailsData})
-  //     this.step = 4
-  //   },
-  //   async onRegisterDocuments(filesData) {
-  //     const res = await uploadDocuments(filesData)
-  //     // this.$router.push('/login')
-  //   }
-  // }
+const onRegisterDocuments = async (filesData) => {
+  const res = await uploadDocuments(filesData)
+  router.push('/login')
+  
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -147,7 +131,7 @@ const onRegisterUser = ( async (userData) => {
   flex-direction: column;
 
   .container-content-register {
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;

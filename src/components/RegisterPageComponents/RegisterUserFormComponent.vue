@@ -1,40 +1,39 @@
 <template>
   <div class="container-register-form">
     <div class="container-content-register">
-      <!-- <CustomStepper class="custom-stepper" :stepperValue="stepperValue"></CustomStepper> -->
       <div class="box-register">
         <div class="box-header-register">
-          <div class="box-header-title font-primary">Criar Conta</div>
+          <div class="font-primary">Criar Conta</div>
           <div class="underline-header"></div>
         </div>
         <div>
-        <v-form class="container-form" ref="formRegister">
-          <div class="container-input-group">
-            <CustomTextField class="font-primary text-field-input" v-model="firstName" label="Nome" type="text" :properties="textFieldProperties" :rules="rulesInputs.namedRules"></CustomTextField>
-            <CustomTextField class="font-primary text-field-input" v-model="lastName" label="Sobrenome" type="text" :properties="textFieldProperties" :rules="rulesInputs.namedRules"></CustomTextField>
-          </div>
-          <div class="container-input-group">
-            <CustomTextField class="font-primary text-field-input" v-model="document" label="CPF" type="text" v-mask="['###.###.###-##']" :properties="textFieldProperties" :rules="rulesInputs.documentRules"></CustomTextField>
-            <CustomTextField class="font-primary text-field-input" v-model="email" label="Email" type="email" :properties="textFieldProperties" :rules="rulesInputs.emailRules"></CustomTextField>
-          </div>
-          <div class="container-input-group">
-            <CustomTextField class="font-primary text-field-input" v-model="password" label="Senha" type="password" :properties="textFieldProperties" :rules="rulesInputs.passwordRules"></CustomTextField>
-            <CustomTextField class="font-primary text-field-input" v-model="repeatPassword" label="Repita Senha" type="password" :properties="textFieldProperties" :rules="rulesInputs.passwordRepeatRules"></CustomTextField>
-          </div>
-          <div class="container-input-group">
-            <CustomTextField class="font-primary text-field-input" v-model="phone" label="Telefone" type="text" v-mask="['(##) ####-####', '(##) #####-####']" :properties="textFieldProperties" :rules="rulesInputs.phoneRules"></CustomTextField>
-            <CustomTextField class="font-primary text-field-input" v-model="bornDate" label="Data de Nascimento" type="date" :properties="textFieldProperties" :rules="rulesInputs.dateRules"></CustomTextField>
-          </div>
-          <div class="footer-form">
-            <span class="font-primary message-error" v-if="error">Algo deu errado, Revise os campos!</span>
-            <CustomButton class="font-primary button-register" @onClick="onRegisterUser" label="Continuar"></CustomButton>
-            <div class="box-footer font-primary">
-              <span>Ja tem uma conta ?</span>
-              <span class="text-register" @click="router.push('/login')">Faça Login</span>
+          <v-form class="container-form" ref="formRegister">
+            <div class="container-input-group">
+              <CustomTextField class="font-primary text-field-input" v-model="firstName" label="Nome" type="text" :properties="textFieldProperties" :rules="rulesInputs.namedRules"></CustomTextField>
+              <CustomTextField class="font-primary text-field-input" v-model="lastName" label="Sobrenome" type="text" :properties="textFieldProperties" :rules="rulesInputs.namedRules"></CustomTextField>
             </div>
-          </div>
-        </v-form>
-      </div>
+            <div class="container-input-group">
+              <CustomTextField class="font-primary text-field-input" v-model="document" label="CPF" type="text" v-mask="['###.###.###-##']" :properties="textFieldProperties" :rules="rulesInputs.documentRules"></CustomTextField>
+              <CustomTextField class="font-primary text-field-input" v-model="email" label="Email" type="email" :properties="textFieldProperties" :rules="rulesInputs.emailRules"></CustomTextField>
+            </div>
+            <div class="container-input-group">
+              <CustomTextField class="font-primary text-field-input" v-model="password" label="Senha" type="password" :properties="textFieldProperties" :rules="rulesInputs.passwordRules"></CustomTextField>
+              <CustomTextField class="font-primary text-field-input" v-model="repeatPassword" label="Repita Senha" type="password" :properties="textFieldProperties" :rules="rulesInputs.passwordRepeatRules"></CustomTextField>
+            </div>
+            <div class="container-input-group">
+              <CustomTextField class="font-primary text-field-input" v-model="phone" label="Telefone" type="text" v-mask="['(##) ####-####', '(##) #####-####']" :properties="textFieldProperties" :rules="rulesInputs.phoneRules"></CustomTextField>
+              <CustomTextField class="font-primary text-field-input" v-model="bornDate" label="Data de Nascimento" type="date" :properties="textFieldProperties" :rules="rulesInputs.dateRules"></CustomTextField>
+            </div>
+            <div class="footer-form">
+              <span class="font-primary message-error" v-if="error">Algo deu errado, Revise os campos!</span>
+              <CustomButton class="font-primary button-register" @onClick="onRegisterUser" label="Continuar"></CustomButton>
+              <div class="box-footer font-primary">
+                <span>Ja tem uma conta ?</span>
+                <span class="text-register" @click="router.push('/login')">Faça Login</span>
+              </div>
+            </div>
+          </v-form>
+        </div>
       </div>
     </div>
   </div>
@@ -117,9 +116,6 @@ const rulesInputs = ref({
       return true
     }
   ]
-  // required: value => !!value || 'Campo Obrigatorio',
-  // justNumber: value => !isNaN(value) || 'Digite Somente Numeros',
-  // validateCPF: value => (value && value.length <= 8) || 'CPF Invalido',
 })
 
 const firstName = ref('')
@@ -149,38 +145,6 @@ const onRegisterUser = async () => {
   emit('onRegisterUser', userData)
 }
 
-// export default {
-//   components: {
-//   },
-
-//   data() {
-//     return {
-//       firstName: "Test",
-//       lastName: "Test",
-//       document: "1234",
-//       email: "email@test.com",
-//       password: "12345",
-//       repeatPassword: "1234",
-//       phone: "3232132",
-//       bornDate: "",
-//     }
-//   },
-
-//   methods: {
-//     onRegisterUser() {
-//       const userData = {
-//         firstName: this.firstName,
-//         lastName: this.lastName,
-//         document: this.document,
-//         email: this.email,
-//         password: this.password,
-//         phone: this.phone,
-//         bornDate: this.bornDate,
-//       }
-//       this.$emit('onRegisterUser', userData)
-//     }
-//   }
-// }
 </script>
 
 <style lang="scss" scoped>
@@ -221,8 +185,6 @@ const onRegisterUser = async () => {
   }
   .box-register ::v-deep(){
     width: 100%;
-    // position: absolute;
-    // margin-top: 40px;
     height: 100%;
     background-color: white;
     border-radius: 10px;
