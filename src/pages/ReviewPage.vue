@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import CustomButton from '@/components/forms/CustomButton.vue';
+import CustomButton from '@/components/CustomComponents/CustomButton.vue';
 
 import { getAllApproves, acceptedUser } from '@/services/user';
 

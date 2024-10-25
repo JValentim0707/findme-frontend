@@ -44,6 +44,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import CustomTextField from '../forms/CustomTextField.vue'
+import CustomButton from '../CustomComponents/CustomButton.vue';
 
 import { getCepData } from '@/services/utils';
 

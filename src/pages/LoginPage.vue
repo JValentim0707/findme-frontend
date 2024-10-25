@@ -32,7 +32,7 @@
 
 // Components
 import CustomTextField from '../components/forms/CustomTextField.vue'
-import CustomButton from '../components/forms/CustomButton.vue'
+import CustomButton from '../components/CustomComponents/CustomButton.vue'
 
 // Functions
 import { loginOnSystem } from '../services/auth.js'

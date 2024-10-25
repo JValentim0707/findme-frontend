@@ -10,6 +10,7 @@ import AdminHomePage from '@/pages/AdminHomePage.vue'
 import WorkerHomePage from '@/pages/WorkerHomePage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
 import ReviewPage from '@/pages/ReviewPage.vue'
+import ComingSoonPage from '@/pages/ComingSoonPage.vue'
 
 const routes = [
   {
@@ -23,6 +24,10 @@ const routes = [
   {
     path: '/register',
     component: RegisterPage,
+  },
+  {
+    path: '/soon',
+    component: ComingSoonPage,
   },
   {
     path: '/review',

@@ -31,7 +31,7 @@
 import { ref } from 'vue';
 
 // Components
-import CustomButton from '../forms/CustomButton.vue';
+import CustomButton from '../CustomComponents/CustomButton.vue';
 
 const emit = defineEmits(['onSelectUSerType'])
 

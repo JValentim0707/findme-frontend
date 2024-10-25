@@ -1,12 +1,13 @@
 <template>
-  <v-btn @click="onClick"> {{ label }} </v-btn>
+  <v-btn @click="onClick" v-bind="buttondProperties"> {{ label }} </v-btn>
 </template>
 
 <script>
 export default {
   props: {
     label: String,
-    functionParams: Object
+    functionParams: Object,
+    buttondProperties: Object
   },
 
   methods: {

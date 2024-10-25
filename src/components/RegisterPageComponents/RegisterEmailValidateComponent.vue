@@ -27,6 +27,7 @@
 import { ref } from 'vue'
 // Components
 import CustomOtpInput from '../CustomComponents/CustomOtpInput.vue'
+import CustomButton from '../CustomComponents/CustomButton.vue';
 
 const emit = defineEmits(['onValidateEmail'])
 

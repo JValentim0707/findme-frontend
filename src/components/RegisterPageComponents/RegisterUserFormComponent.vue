@@ -46,7 +46,7 @@ import { useRouter } from 'vue-router'
 
 // Components
 import CustomTextField from '../forms/CustomTextField.vue'
-import CustomButton from '../forms/CustomButton.vue';
+import CustomButton from '../CustomComponents/CustomButton.vue';
 
 const router = useRouter()
 const emit = defineEmits(['onRegisterUser'])
